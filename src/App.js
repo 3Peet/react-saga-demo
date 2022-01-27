@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {
+	ADD_REQ,
+	DECREMENT_REQ,
+	INCREMENT_REQ,
+	INCREMENT_ASYNC_REQ,
+} from "./redux/actionTypes";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const dispatch = useDispatch();
+	const action = (type, payload) => dispatch({type, payload});
+	const counterReducer = useSelector(({counterReducer}) => counterReducer);
+
+	return (
+		<>
+			<button onClick={() => action(INCREMENT_ASYNC_REQ)}>
+				Increment after 1 sec.
+			</button>
+			<button onClick={() => action(INCREMENT_REQ)}>Increment</button>
+			<button onClick={() => action(DECREMENT_REQ)}>Decrement</button>
+			<button onClick={() => action(ADD_REQ, 10)}>ADD 10</button>
+			<hr />
+			<h1>Clicked : {counterReducer.count}</h1>
+		</>
+	);
+};
 
 export default App;
